@@ -114,6 +114,7 @@ var colorCurrentFireball = WIZARD_FIREBALL_COLORS[0];
 var coatColorInput = userDialog.querySelector('input[name=coat-color]');
 var eyesColorInput = userDialog.querySelector('input[name=eyes-color]');
 var fireballColorInput = userDialog.querySelector('input[name=fireball-color]');
+var changeColorStyle = ['fill', 'background'];
 
 /* Перебор цветов в случайном порядке
  myWizardCoat.addEventListener('click', function () {
@@ -129,7 +130,7 @@ var fireballColorInput = userDialog.querySelector('input[name=fireball-color]');
  }); */
 
 // Перебор цветов последовательно
-var changeColor = function (myWizardElement, elementArr, currentElementColor, ElementColorInput) {
+var changeColor = function (myWizardElement, elementArr, currentElementColor, changeStyle, ElementColorInput) {
   myWizardElement.addEventListener('click', function () {
     var colorNumber = elementArr.indexOf(currentElementColor);
     colorNumber++;
@@ -138,20 +139,10 @@ var changeColor = function (myWizardElement, elementArr, currentElementColor, El
     }
     currentElementColor = elementArr[colorNumber];
     ElementColorInput.value = currentElementColor;
-    myWizardElement.style.fill = elementArr[colorNumber];
+    myWizardElement.style.changeStyle = elementArr[colorNumber];
   });
 };
 
-changeColor(myWizardCoat, WIZARD_COAT_COLORS, colorCurrentCoat, coatColorInput);
-changeColor(myWizardEyes, WIZARD_EYES_COLORS, colorCurrentEyes, eyesColorInput);
-
-myWizardFireball.addEventListener('click', function () {
-  var colorNumber = WIZARD_FIREBALL_COLORS.indexOf(colorCurrentFireball);
-  colorNumber++;
-  if (colorNumber === WIZARD_FIREBALL_COLORS.length) {
-    colorNumber = 0;
-  }
-  colorCurrentFireball = WIZARD_FIREBALL_COLORS[colorNumber];
-  fireballColorInput.value = colorCurrentFireball;
-  myWizardFireball.style.backgroundColor = WIZARD_FIREBALL_COLORS[colorNumber];
-});
+changeColor(myWizardCoat, WIZARD_COAT_COLORS, colorCurrentCoat, changeColorStyle[0], coatColorInput);
+changeColor(myWizardEyes, WIZARD_EYES_COLORS, colorCurrentEyes, changeColorStyle[0], eyesColorInput);
+changeColor(myWizardFireball, WIZARD_FIREBALL_COLORS, colorCurrentFireball, changeColorStyle[1], fireballColorInput);
