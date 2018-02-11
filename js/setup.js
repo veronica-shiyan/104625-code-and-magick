@@ -1,6 +1,8 @@
 'use strict';
 
-var userDialog = document.querySelector('.setup');
+(function () {
+  var userDialog = document.querySelector('.setup');
 
-window.renderWizard();
-userDialog.querySelector('.setup-similar').classList.remove('hidden');
+  window.renderWizard();
+  userDialog.querySelector('.setup-similar').classList.remove('hidden');
+})();
