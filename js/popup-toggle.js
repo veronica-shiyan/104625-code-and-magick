@@ -15,6 +15,8 @@
   };
 
   var closePopup = function () {
+    userDialog.style.top = '';
+    userDialog.style.left = '';
     userDialog.classList.add('hidden');
     document.removeEventListener('keydown', onPopupEscPress);
   };
