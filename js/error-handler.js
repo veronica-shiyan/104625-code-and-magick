@@ -1,7 +1,10 @@
 'use strict';
 
 (function () {
+  var ESC_KEYCODE = 27;
+  var ENTER_KEYCODE = 13;
   var userDialog = document.querySelector('.setup');
+
   window.errorHandler = function (errorMessage) {
     var element = document.createElement('div');
     var textElement = 'Данные потерялись в пути... \n Попробуйте еще раз немного позже. \n';
@@ -23,8 +26,6 @@
     closeElement.style.right = '0';
     element.insertAdjacentElement('afterbegin', closeElement);
 
-    var ESC_KEYCODE = 27;
-    var ENTER_KEYCODE = 13;
     var onCloseElementEscPress = function (evt) {
       if (evt.keyCode === ESC_KEYCODE) {
         closeMessage();
