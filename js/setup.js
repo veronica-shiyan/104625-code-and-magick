@@ -2,7 +2,6 @@
 
 (function () {
   document.querySelector('.setup-similar').classList.remove('hidden');
-  window.renderWizard();
 
   var shopElement = document.querySelector('.setup-artifacts-shop');
   var artifactsElement = document.querySelector('.setup-artifacts');

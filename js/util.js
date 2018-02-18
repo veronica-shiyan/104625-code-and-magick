@@ -27,6 +27,9 @@
       var CLOUD_HEIGHT = 270;
       ctx.fillStyle = color;
       ctx.fillRect(x, y, CLOUD_WIDTH, CLOUD_HEIGHT);
+    },
+    compareRandom: function () {
+      return Math.random() - 0.5;
     }
   };
 })();
