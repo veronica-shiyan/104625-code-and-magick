@@ -12,17 +12,69 @@
   var eyesColorInput = userDialog.querySelector('input[name=eyes-color]');
   var fireballColorInput = userDialog.querySelector('input[name=fireball-color]');
   var changeColorStyle = ['fill', 'background'];
+  var coatColor;
+  var eyesColor;
 
-  var changeColor = function (myWizardElement, elementArr, currentElementColor, changeStyle, elementColorInput) {
-    var nextColor;
-    myWizardElement.addEventListener('click', function () {
-      nextColor = window.util.getNextElement(nextColor ? nextColor : currentElementColor, elementArr);
-      elementColorInput.value = nextColor;
-      myWizardElement.style[changeStyle] = nextColor;
-    });
+  var getRank = function (wizard) {
+    var rank = 0;
+    if (wizard.colorCoat === coatColor) {
+      rank += 2;
+    }
+    if (wizard.colorEyes === eyesColor) {
+      rank += 1;
+    }
+    return rank;
   };
 
-  changeColor(myWizardCoat, WIZARD_COAT_COLORS, WIZARD_COAT_COLORS[0], changeColorStyle[0], coatColorInput);
-  changeColor(myWizardEyes, WIZARD_EYES_COLORS, WIZARD_EYES_COLORS[0], changeColorStyle[0], eyesColorInput);
-  changeColor(myWizardFireball, WIZARD_FIREBALL_COLORS, WIZARD_FIREBALL_COLORS[0], changeColorStyle[1], fireballColorInput);
+  var namesComparator = function (left, right) {
+    if (left > right) {
+      return 1;
+    } else if (left < right) {
+      return -1;
+    } else {
+      return 0;
+    }
+  };
+
+  window.updateWizards = function () {
+    window.render(window.wizards.slice().sort(function (left, right) {
+      var rankDiff = getRank(right) - getRank(left);
+      if (rankDiff === 0) {
+        rankDiff = namesComparator(left.name, right.name);
+      }
+      return rankDiff;
+    }));
+  };
+
+  var changeCoatColor = function () {
+    var nextColor;
+    myWizardCoat.addEventListener('click', function () {
+      nextColor = window.util.getNextElement(nextColor ? nextColor : WIZARD_COAT_COLORS[0], WIZARD_COAT_COLORS);
+      coatColorInput.value = nextColor;
+      myWizardCoat.style[changeColorStyle[0]] = nextColor;
+      coatColor = nextColor;
+      window.debounce(window.updateWizards);
+    });
+  };
+  var changeEyesColor = function () {
+    var nextColor;
+    myWizardEyes.addEventListener('click', function () {
+      nextColor = window.util.getNextElement(nextColor ? nextColor : WIZARD_EYES_COLORS[0], WIZARD_EYES_COLORS);
+      eyesColorInput.value = nextColor;
+      myWizardEyes.style[changeColorStyle[0]] = nextColor;
+      eyesColor = nextColor;
+      window.debounce(window.updateWizards);
+    });
+  };
+  var changeFireballColor = function () {
+    var nextColor;
+    myWizardFireball.addEventListener('click', function () {
+      nextColor = window.util.getNextElement(nextColor ? nextColor : WIZARD_FIREBALL_COLORS[0], WIZARD_FIREBALL_COLORS);
+      fireballColorInput.value = nextColor;
+      myWizardFireball.style[changeColorStyle[1]] = nextColor;
+    });
+  };
+  changeCoatColor();
+  changeEyesColor();
+  changeFireballColor();
 })();

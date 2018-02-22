@@ -3,6 +3,7 @@
 (function () {
   var WIZARD_QUANTITY = 4;
   var userDialog = document.querySelector('.setup');
+  window.wizards = [];
 
   var similarListElement = userDialog.querySelector('.setup-similar-list');
   var similarWizardTemplate = document.querySelector('#similar-wizard-template').content;
@@ -17,19 +18,18 @@
     return wizardElement;
   };
 
-  var loadHandler = function (wizards) {
-    var fragment = document.createDocumentFragment();
-    var wizardsArr = [];
-    for (var i = 0; i < wizards.length; i++) {
-      wizardsArr[i] = createWizardElements(wizards[i]);
+  window.render = function (data) {
+    var takeNumber = window.wizards.length > WIZARD_QUANTITY ? WIZARD_QUANTITY : data.length;
+    similarListElement.innerHTML = '';
+    for (var i = 0; i < takeNumber; i++) {
+      similarListElement.appendChild(createWizardElements(data[i]));
     }
-    wizardsArr.sort(window.util.compareRandom);
-    for (i = 0; i < WIZARD_QUANTITY; i++) {
-      fragment.appendChild(wizardsArr[i]);
-    }
-    similarListElement.appendChild(fragment);
+  };
+
+  var loadHandler = function (data) {
+    window.wizards = data;
+    window.updateWizards();
   };
 
   window.backend.load(loadHandler, window.errorHandler);
 })();
-
